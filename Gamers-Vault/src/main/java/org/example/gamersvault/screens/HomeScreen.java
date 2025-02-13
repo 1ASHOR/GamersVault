@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 
 public class HomeScreen {
 
+    private Pane rootPane;
     private VBox vBox;
     private HBox hBox;
     private FlowPane flowPane;
@@ -16,30 +17,65 @@ public class HomeScreen {
     public HomeScreen(Stage homeStage) {
         System.out.println("HomeScreen initiated");
 
-        Pane rootPane = new Pane();
+        rootPane = new Pane();
         Scene scene = new Scene(rootPane, 2000, 1000);
 
-        vBox = new VBox();
-        vBox.setPrefSize(rootPane.getWidth() / 6, rootPane.getHeight());
-        vBox.setStyle("-fx-border-color: black");
+        //Call methods to add content sections
+        addVBOX();
+        addHBOX();
+        addFlowPane();
 
-        hBox = new HBox();
-        hBox.setPrefSize(rootPane.getWidth() - vBox.getPrefWidth(), rootPane.getHeight() / 6);
-        hBox.setLayoutX(vBox.getPrefWidth());
-        hBox.setStyle("-fx-border-color: black");
-
-        flowPane = new FlowPane();
-        flowPane.setPrefSize(rootPane.getWidth() - vBox.getPrefWidth(), rootPane.getHeight() - hBox.getPrefHeight());
-        flowPane.setLayoutX(vBox.getPrefWidth());
-        flowPane.setLayoutY(hBox.getPrefHeight());
-        flowPane.setStyle("-fx-background-color: lightgray");
-
-        rootPane.getChildren().add(vBox);
-        rootPane.getChildren().add(hBox);
-        rootPane.getChildren().add(flowPane);
         homeStage.setScene(scene);
     }
 
+    private void addVBOX () {
+        //create variables
+        vBox = new VBox();
+
+        //set sizes
+        vBox.setPrefSize(rootPane.getWidth() / 6, rootPane.getHeight());
+
+        //add styling
+        vBox.setStyle("-fx-border-color: black");
+
+        //add child to parent
+        rootPane.getChildren().add(vBox);
+    }
+
+    private void addHBOX(){
+        //create variables
+        hBox = new HBox();
+
+        //set sizes
+        hBox.setPrefSize(rootPane.getWidth() - vBox.getPrefWidth(), rootPane.getHeight() / 6);
+
+        //set layout
+        hBox.setLayoutX(vBox.getPrefWidth());
+
+        //add styling
+        hBox.setStyle("-fx-border-color: black");
+
+        //add child to parent
+        rootPane.getChildren().add(hBox);
+    }
+
+    private void addFlowPane () {
+        //create variables
+        flowPane = new FlowPane();
+
+        //set sizes
+        flowPane.setPrefSize(rootPane.getWidth() - vBox.getPrefWidth(), rootPane.getHeight() - hBox.getPrefHeight());
+
+        //set layout
+        flowPane.setLayoutX(vBox.getPrefWidth());
+        flowPane.setLayoutY(hBox.getPrefHeight());
+
+        //add styling
+        flowPane.setStyle("-fx-background-color: lightgray");
+
+        //add child to parent
+        rootPane.getChildren().add(flowPane);
+    }
 
 
 }
