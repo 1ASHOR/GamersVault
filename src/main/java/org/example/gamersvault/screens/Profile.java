@@ -11,12 +11,14 @@ public class Profile {
 
     private Stage profileStage;
     private GridPane rootGrid;
+    private Button saveButton;
 
     public Profile(){
         rootGrid = new GridPane();
         Scene scene = new Scene(rootGrid, 400, 500);
 
         inputElements();
+        updateProfile();
 
         profileStage = new Stage();
         profileStage.setScene(scene);
@@ -28,7 +30,7 @@ public class Profile {
         TextField gamertagTextField = new TextField();
         Label discordLabel = new Label("Enter Discord ID");
         TextField discordTextField = new TextField();
-        Button saveButton = new Button("Save");
+        saveButton = new Button("Save");
 
 
         //add children to parent
@@ -37,8 +39,10 @@ public class Profile {
         rootGrid.add(discordLabel, 0, 1);
         rootGrid.add(discordTextField, 1, 1);
         rootGrid.add(saveButton, 0, 2);
+    }
 
-        //functionlity
+    private void updateProfile(){
+        //method for funcionality save button
         saveButton.setOnAction(e -> {
             System.out.println("Profile updated!");
             profileStage.close();

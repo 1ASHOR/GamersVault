@@ -13,6 +13,7 @@ public class HomeScreen {
     private VBox vBox;
     private HBox hBox;
     private FlowPane flowPane;
+    private Button accountButton;
 
     public HomeScreen(Stage homeStage) {
         System.out.println("HomeScreen initiated");
@@ -25,6 +26,8 @@ public class HomeScreen {
         addHBOX();
         addFlowPane();
 
+        updateProfile();
+        
         homeStage.setScene(scene);
     }
 
@@ -45,11 +48,11 @@ public class HomeScreen {
     private void addHBOX(){
         //create variables
         hBox = new HBox();
-        Button account = new Button("Edit Profile");
+        accountButton = new Button("Edit Profile");
 
         //set sizes
         hBox.setPrefSize(rootPane.getWidth() - vBox.getPrefWidth(), rootPane.getHeight() / 6);
-        account.setMinWidth(Region.USE_COMPUTED_SIZE);
+        accountButton.setMinWidth(Region.USE_COMPUTED_SIZE);
         //set layout
         hBox.setLayoutX(vBox.getPrefWidth());
         hBox.setAlignment(Pos.CENTER_RIGHT);
@@ -60,14 +63,8 @@ public class HomeScreen {
         hBox.setPadding(new Insets(0, 25, 0, 0));
 
         //add child to parent
-        hBox.getChildren().add(account);
+        hBox.getChildren().add(accountButton);
         rootPane.getChildren().add(hBox);
-
-        //functionality button
-        account.setOnAction(e -> {
-            Profile profile = new Profile();
-            System.out.println("profile can be updated");
-        });
     }
 
     private void addFlowPane () {
@@ -88,5 +85,12 @@ public class HomeScreen {
         rootPane.getChildren().add(flowPane);
     }
 
+    private void updateProfile() {
+        //functionality button
+        accountButton.setOnAction(e -> {
+            Profile profile = new Profile();
+            System.out.println("profile can be updated");
+        });
+    }
 
 }
