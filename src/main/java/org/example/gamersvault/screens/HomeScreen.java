@@ -65,7 +65,8 @@ public class HomeScreen {
 
         //functionality button
         account.setOnAction(e -> {
-            System.out.println("Edit Profile");
+            Profile profile = new Profile();
+            System.out.println("profile can be updated");
         });
     }
 
