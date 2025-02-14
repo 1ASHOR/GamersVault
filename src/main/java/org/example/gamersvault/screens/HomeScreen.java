@@ -1,10 +1,10 @@
 package org.example.gamersvault.screens;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Button;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 public class HomeScreen {
@@ -18,7 +18,7 @@ public class HomeScreen {
         System.out.println("HomeScreen initiated");
 
         rootPane = new Pane();
-        Scene scene = new Scene(rootPane, 2000, 1000);
+        Scene scene = new Scene(rootPane, 1200, 600);
 
         //Call methods to add content sections
         addVBOX();
@@ -45,18 +45,28 @@ public class HomeScreen {
     private void addHBOX(){
         //create variables
         hBox = new HBox();
+        Button account = new Button("Edit Profile");
 
         //set sizes
         hBox.setPrefSize(rootPane.getWidth() - vBox.getPrefWidth(), rootPane.getHeight() / 6);
-
+        account.setMinWidth(Region.USE_COMPUTED_SIZE);
         //set layout
         hBox.setLayoutX(vBox.getPrefWidth());
+        hBox.setAlignment(Pos.CENTER_RIGHT);
+
 
         //add styling
         hBox.setStyle("-fx-border-color: black");
+        hBox.setPadding(new Insets(0, 25, 0, 0));
 
         //add child to parent
+        hBox.getChildren().add(account);
         rootPane.getChildren().add(hBox);
+
+        //functionality button
+        account.setOnAction(e -> {
+            System.out.println("Edit Profile");
+        });
     }
 
     private void addFlowPane () {
