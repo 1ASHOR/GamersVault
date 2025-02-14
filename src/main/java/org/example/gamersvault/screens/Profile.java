@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 
 public class Profile {
 
+    private Stage profileStage;
     private GridPane rootGrid;
 
     public Profile(){
@@ -17,7 +18,7 @@ public class Profile {
 
         inputElements();
 
-        Stage profileStage = new Stage();
+        profileStage = new Stage();
         profileStage.setScene(scene);
         profileStage.show();
     }
@@ -36,5 +37,11 @@ public class Profile {
         rootGrid.add(discordLabel, 0, 1);
         rootGrid.add(discordTextField, 1, 1);
         rootGrid.add(saveButton, 0, 2);
+
+        //functionlity
+        saveButton.setOnAction(e -> {
+            System.out.println("Profile updated!");
+            profileStage.close();
+        });
     }
 }
