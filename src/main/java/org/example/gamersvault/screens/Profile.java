@@ -1,23 +1,26 @@
 package org.example.gamersvault.screens;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Profile {
 
     private Stage profileStage;
-    private GridPane rootGrid;
+    private VBox rootVbox;
     private Button saveButton;
 
     public Profile(){
-        rootGrid = new GridPane();
-        Scene scene = new Scene(rootGrid, 400, 500);
+        rootVbox = new VBox();
+        Scene scene = new Scene(rootVbox, 400, 500);
 
         inputElements();
+        layoutStyle();
         updateProfile();
 
         profileStage = new Stage();
@@ -34,11 +37,31 @@ public class Profile {
 
 
         //add children to parent
-        rootGrid.add(gamertagLabel, 0, 0);
-        rootGrid.add(gamertagTextField, 1, 0);
-        rootGrid.add(discordLabel, 0, 1);
-        rootGrid.add(discordTextField, 1, 1);
-        rootGrid.add(saveButton, 0, 2);
+        rootVbox.getChildren().addAll(gamertagLabel, gamertagTextField, discordLabel, discordTextField, saveButton);
+
+        // add styling || NEEDS TO BE MOVED TO OTHER METHOD OR CSS FILE
+        gamertagTextField.setMaxWidth(200);
+        gamertagTextField.setPrefHeight(30);
+        discordTextField.setMaxWidth(200);
+        discordTextField.setPrefHeight(30);
+
+        gamertagTextField.setStyle("-fx-font-size: 14px");
+        discordTextField.setStyle("-fx-font-size: 14px");
+
+        gamertagLabel.setStyle("-fx-font-size: 16px");
+        discordLabel.setStyle("-fx-font-size: 16px");
+
+        saveButton.setStyle("-fx-font-size: 16px");
+        saveButton.setPrefSize(100, 30);
+    }
+
+    private void layoutStyle(){
+        //positioning
+        rootVbox.setAlignment(Pos.TOP_CENTER);
+        rootVbox.setSpacing(15);
+        rootVbox.setPadding(new Insets(20, 0, 0, 0));
+
+        //styling
     }
 
     private void updateProfile(){
