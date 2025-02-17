@@ -8,12 +8,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.example.gamersvault.database.Database;
+import org.example.gamersvault.database.ProfileController;
 
 public class Profile {
 
     private Stage profileStage;
     private VBox rootVbox;
     private Button saveButton;
+    private TextField gamertagTextField;
+    private TextField discordTextField;
 
     public Profile(){
         rootVbox = new VBox();
@@ -29,10 +33,10 @@ public class Profile {
     }
 
     private void inputElements(){
-        Label gamertagLabel = new Label("Enter gamertag");
-        TextField gamertagTextField = new TextField();
-        Label discordLabel = new Label("Enter Discord ID");
-        TextField discordTextField = new TextField();
+        Label gamertagLabel = new Label("Enter Gamertag");
+        gamertagTextField = new TextField();
+        Label discordLabel = new Label("Enter Discord Name");
+        discordTextField = new TextField();
         saveButton = new Button("Save");
 
 
@@ -65,9 +69,13 @@ public class Profile {
     }
 
     private void updateProfile(){
+        // needed objects created
+        Database db = new Database();
+        ProfileController pfC = new ProfileController(db);
         //method for funcionality save button
         saveButton.setOnAction(e -> {
-            System.out.println("Profile updated!");
+            //callec object method to update profile info
+            pfC.updateProfile(gamertagTextField.getText(), discordTextField.getText());
             profileStage.close();
         });
     }
