@@ -6,6 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import org.example.gamersvault.database.Database;
+import org.example.gamersvault.database.UserController;
 
 public class HomeScreen {
 
@@ -14,19 +16,23 @@ public class HomeScreen {
     private HBox hBox;
     private FlowPane flowPane;
     private Button accountButton;
+    private Database database;
+    private UserController userController;
 
     public HomeScreen(Stage homeStage) {
         System.out.println("HomeScreen initiated");
 
         rootPane = new Pane();
         Scene scene = new Scene(rootPane, 1200, 600);
+        database = new Database();
+        userController = new UserController(database);
 
         //Call methods to add content sections
         addVBOX();
         addHBOX();
         addFlowPane();
 
-        updateProfile();
+        updateUser();
         
         homeStage.setScene(scene);
     }
@@ -38,10 +44,14 @@ public class HomeScreen {
         //set sizes
         vBox.setPrefSize(rootPane.getWidth() / 6, rootPane.getHeight());
 
+        //alignment
+        vBox.setAlignment(Pos.TOP_CENTER);
+
         //add styling
         vBox.setStyle("-fx-border-color: black");
 
         //add child to parent
+        vBox.getChildren().add(userController.getUserInfo());
         rootPane.getChildren().add(vBox);
     }
 
@@ -85,11 +95,11 @@ public class HomeScreen {
         rootPane.getChildren().add(flowPane);
     }
 
-    private void updateProfile() {
+    private void updateUser() {
         //functionality button
         accountButton.setOnAction(e -> {
-            Profile profile = new Profile();
-            System.out.println("profile can be updated");
+            User profile = new User();
+
         });
     }
 

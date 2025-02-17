@@ -9,9 +9,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.gamersvault.database.Database;
-import org.example.gamersvault.database.ProfileController;
+import org.example.gamersvault.database.UserController;
 
-public class Profile {
+public class User {
 
     private Stage profileStage;
     private VBox rootVbox;
@@ -19,7 +19,7 @@ public class Profile {
     private TextField gamertagTextField;
     private TextField discordTextField;
 
-    public Profile(){
+    public User(){
         rootVbox = new VBox();
         Scene scene = new Scene(rootVbox, 400, 500);
 
@@ -71,7 +71,7 @@ public class Profile {
     private void updateProfile(){
         // needed objects created
         Database db = new Database();
-        ProfileController pfC = new ProfileController(db);
+        UserController pfC = new UserController(db);
         //method for funcionality save button
         saveButton.setOnAction(e -> {
             //callec object method to update profile info
