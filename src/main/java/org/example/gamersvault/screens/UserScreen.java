@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import org.example.gamersvault.database.Database;
 import org.example.gamersvault.database.UserController;
 
-public class User {
+public class UserScreen {
 
     private Stage profileStage;
     private VBox rootVbox;
@@ -19,7 +19,7 @@ public class User {
     private TextField gamertagTextField;
     private TextField discordTextField;
 
-    public User(){
+    public UserScreen(){
         rootVbox = new VBox();
         Scene scene = new Scene(rootVbox, 400, 500);
 

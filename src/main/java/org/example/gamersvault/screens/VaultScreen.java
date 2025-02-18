@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import org.example.gamersvault.database.Database;
 import org.example.gamersvault.database.UserController;
 
-public class HomeScreen {
+public class VaultScreen {
 
     private Pane rootPane;
     private VBox vBox;
@@ -18,8 +18,9 @@ public class HomeScreen {
     private Button accountButton;
     private Database database;
     private UserController userController;
+    private Button addGameButton;
 
-    public HomeScreen(Stage homeStage) {
+    public VaultScreen(Stage homeStage) {
         System.out.println("HomeScreen initiated");
 
         rootPane = new Pane();
@@ -33,6 +34,7 @@ public class HomeScreen {
         addFlowPane();
 
         updateUser();
+        addGame();
         
         homeStage.setScene(scene);
     }
@@ -59,10 +61,13 @@ public class HomeScreen {
         //create variables
         hBox = new HBox();
         accountButton = new Button("Edit Profile");
+        addGameButton = new Button("Add Game to Vault");
 
         //set sizes
         hBox.setPrefSize(rootPane.getWidth() - vBox.getPrefWidth(), rootPane.getHeight() / 6);
+        //scale button with content size
         accountButton.setMinWidth(Region.USE_COMPUTED_SIZE);
+        addGameButton.setMinWidth(Region.USE_COMPUTED_SIZE);
         //set layout
         hBox.setLayoutX(vBox.getPrefWidth());
         hBox.setAlignment(Pos.CENTER_RIGHT);
@@ -71,9 +76,10 @@ public class HomeScreen {
         //add styling
         hBox.setStyle("-fx-border-color: black");
         hBox.setPadding(new Insets(0, 25, 0, 0));
+        hBox.setSpacing(20);
 
         //add child to parent
-        hBox.getChildren().add(accountButton);
+        hBox.getChildren().addAll(accountButton, addGameButton);
         rootPane.getChildren().add(hBox);
     }
 
@@ -98,8 +104,14 @@ public class HomeScreen {
     private void updateUser() {
         //functionality button
         accountButton.setOnAction(e -> {
-            User profile = new User();
+            UserScreen profile = new UserScreen();
 
+        });
+    }
+
+    private void addGame(){
+        addGameButton.setOnAction(e -> {
+            AddGameScreen game = new AddGameScreen();
         });
     }
 
