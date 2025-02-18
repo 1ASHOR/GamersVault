@@ -2,10 +2,7 @@ package org.example.gamersvault.screens;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -21,12 +18,11 @@ public class AddGameScreen {
     private ComboBox genre;
     private ComboBox platform;
     private ComboBox developer;
-    private GridPane leftGrid;
-    private GridPane rightGrid;
+    private Button saveGame;
 
     public AddGameScreen() {
         rootGrid = new GridPane();
-        Scene scene = new Scene(rootGrid, 1000, 500);
+        Scene scene = new Scene(rootGrid, 800, 500);
 
         addElements();
         addStyling();
@@ -41,37 +37,45 @@ public class AddGameScreen {
         Label giveName = new Label("Name");
         name = new TextField();
         description = new TextArea();
+        Label givePlaytime = new Label("Playtime");
         hours = new TextField();
+        Label giveProgress = new Label("Progress");
         progress = new TextField();
         opinion = new TextArea();
+        Label giveGenre = new Label("Genre");
         genre = new ComboBox();
+        Label givePlatform = new Label("Platform");
         platform = new ComboBox();
+        Label giveDeveloper = new Label("Developer");
         developer = new ComboBox();
-
-        leftGrid = new GridPane();
-        rightGrid = new GridPane();
+        saveGame = new Button("Add game to vault");
 
         //add to grid
-        leftGrid.add(giveName, 0, 0);
-        leftGrid.add(name, 1, 0);
-        leftGrid.add(hours, 0, 1);
-        leftGrid.add(progress, 0, 2);
-        leftGrid.add(genre, 0, 3);
-        leftGrid.add(platform, 0, 4);
-        leftGrid.add(developer, 0, 5);
+        rootGrid.add(giveName, 0, 0, 1, 1);
+        rootGrid.add(name, 1, 0, 1, 1);
+        rootGrid.add(givePlaytime, 0, 1, 1, 1);
+        rootGrid.add(hours, 1, 1, 1, 1);
+        rootGrid.add(giveProgress, 0, 2, 1, 1);
+        rootGrid.add(progress, 1, 2, 1, 1);
+        rootGrid.add(giveGenre, 0, 3, 1, 1);
+        rootGrid.add(genre, 1, 3, 1, 1);
+        rootGrid.add(givePlatform, 0, 4, 1, 1);
+        rootGrid.add(platform, 1, 4, 1, 1);
+        rootGrid.add(giveDeveloper, 0, 5, 1, 1);
+        rootGrid.add(developer, 1, 5, 1, 1);
+        rootGrid.add(saveGame, 2, 6, 1, 1);
 
-        rightGrid.add(description, 0, 0);
-        rightGrid.add(opinion, 0, 1);
-
-        rootGrid.add(leftGrid, 0, 0);
-        rootGrid.add(rightGrid, 1, 0);
+        rootGrid.add(description, 2, 0, 2, 2);
+        rootGrid.add(opinion, 2, 2, 2, 2);
     }
 
     private void addStyling(){
-        leftGrid.setPadding(new Insets(10));
-        rightGrid.setPadding(new Insets(10));
+        rootGrid.setHgap(20);
+        rootGrid.setVgap(20);
+        rootGrid.setPadding(new Insets(20));
 
-        name.setPrefWidth(rootGrid.getWidth()/4);
+        description.setPromptText("Give game description...");
+        opinion.setPromptText("Give opinion...");
     }
 
 }
