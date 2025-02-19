@@ -71,11 +71,11 @@ public class UserScreen {
     private void updateProfile(){
         // needed objects created
         Database db = new Database();
-        UserController pfC = new UserController(db);
+        UserController pC = new UserController(db);
         //method for funcionality save button
         saveButton.setOnAction(e -> {
             //callec object method to update profile info
-            pfC.updateProfile(gamertagTextField.getText(), discordTextField.getText());
+            pC.updateProfile(gamertagTextField.getText(), discordTextField.getText());
             profileStage.close();
         });
     }

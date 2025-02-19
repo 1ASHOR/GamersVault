@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import org.example.gamersvault.database.Database;
+import org.example.gamersvault.database.VaultController;
 
 public class AddGameScreen {
 
@@ -15,10 +17,8 @@ public class AddGameScreen {
     private TextField hours;
     private TextField progress;
     private TextArea opinion;
-    private ComboBox genre;
-    private ComboBox platform;
-    private ComboBox developer;
-    private Button saveGame;
+    private Button saveGameButton;
+    private VaultController vc;
 
     public AddGameScreen() {
         rootGrid = new GridPane();
@@ -26,6 +26,7 @@ public class AddGameScreen {
 
         addElements();
         addStyling();
+        saveGame();
 
         addGameStage = new Stage();
         addGameStage.setScene(scene);
@@ -43,12 +44,10 @@ public class AddGameScreen {
         progress = new TextField();
         opinion = new TextArea();
         Label giveGenre = new Label("Genre");
-        genre = new ComboBox();
         Label givePlatform = new Label("Platform");
-        platform = new ComboBox();
         Label giveDeveloper = new Label("Developer");
-        developer = new ComboBox();
-        saveGame = new Button("Add game to vault");
+        saveGameButton = new Button("Add game to vault");
+        vc = new VaultController();
 
         //add to grid
         rootGrid.add(giveName, 0, 0, 1, 1);
@@ -58,13 +57,16 @@ public class AddGameScreen {
         rootGrid.add(giveProgress, 0, 2, 1, 1);
         rootGrid.add(progress, 1, 2, 1, 1);
         rootGrid.add(giveGenre, 0, 3, 1, 1);
-        rootGrid.add(genre, 1, 3, 1, 1);
         rootGrid.add(givePlatform, 0, 4, 1, 1);
-        rootGrid.add(platform, 1, 4, 1, 1);
         rootGrid.add(giveDeveloper, 0, 5, 1, 1);
-        rootGrid.add(developer, 1, 5, 1, 1);
-        rootGrid.add(saveGame, 2, 6, 1, 1);
+        rootGrid.add(saveGameButton, 2, 6, 1, 1);
 
+        //add combobox with values from database to rootGrid
+        rootGrid.add(vc.getGenres(), 1, 3, 1, 1);
+        rootGrid.add(vc.getPlatforms(), 1, 4, 1, 1);
+        rootGrid.add(vc.getDevs(), 1, 5, 1, 1);
+
+        // add textarea's to rootGrid, taking double grid spacing
         rootGrid.add(description, 2, 0, 2, 2);
         rootGrid.add(opinion, 2, 2, 2, 2);
     }
@@ -78,4 +80,9 @@ public class AddGameScreen {
         opinion.setPromptText("Give opinion...");
     }
 
+    public void saveGame(){
+        saveGameButton.setOnAction(e -> {
+            vc.addToVault(name.getText());
+        });
+    }
 }
