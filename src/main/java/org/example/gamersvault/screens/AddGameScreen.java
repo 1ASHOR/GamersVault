@@ -77,12 +77,17 @@ public class AddGameScreen {
         rootGrid.setPadding(new Insets(20));
 
         description.setPromptText("Give game description...");
+        description.setWrapText(true);
         opinion.setPromptText("Give opinion...");
+        opinion.setWrapText(true);
     }
 
     public void saveGame(){
         saveGameButton.setOnAction(e -> {
-            vc.addToVault(name.getText());
+            double playtime = Double.parseDouble(hours.getText());
+            int progression = Integer.parseInt(progress.getText());
+
+            vc.addToVault(name.getText(), description.getText(), playtime, progression, opinion.getText());
         });
     }
 }

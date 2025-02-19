@@ -72,5 +72,15 @@ public class VaultController {
         return devs;
     }
 
+    public void addToVault(String name, String description, double playtime, int progression, String opinion) {
+//        ADD CHECK FOR FILLED IN DATA -> PLAYTIME CANNOT CONTAIN , || SET PLACEHOLDER FOR INPUT THAT IS ALLOWED TO BE NULL;
+        try {
+            Statement stmt = database.getConnection().createStatement();
+            stmt.execute("INSERT INTO game (name, description, hours_played, progression, opinion) VALUES ('"+ name +"', '"+ description +"', '"+ playtime +"', '"+ progression +"', '"+ opinion +"')");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }
