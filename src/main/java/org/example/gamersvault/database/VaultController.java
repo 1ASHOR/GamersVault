@@ -1,7 +1,13 @@
 package org.example.gamersvault.database;
 
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 
+import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,14 +15,18 @@ import java.sql.Statement;
 public class VaultController {
 
     private Database database;
+    private ComboBox genres;
+    private ComboBox platforms;
+    private ComboBox devs;
 
     public VaultController() {
         Database db = new Database();
         this.database = db;
     }
 
+    // methods underneath used to fill the three comboboxes with value's from database
     public ComboBox getGenres(){
-        ComboBox genres = new ComboBox();
+        genres = new ComboBox();
 
         try {
             Statement stmt = database.getConnection().createStatement();
@@ -35,7 +45,7 @@ public class VaultController {
     }
 
     public ComboBox getPlatforms(){
-        ComboBox platforms = new ComboBox();
+        platforms = new ComboBox();
 
         try {
             Statement stmt = database.getConnection().createStatement();
@@ -54,7 +64,7 @@ public class VaultController {
     }
 
     public ComboBox getDevs(){
-        ComboBox devs = new ComboBox();
+        devs = new ComboBox();
 
         try {
             Statement stmt = database.getConnection().createStatement();
@@ -72,14 +82,70 @@ public class VaultController {
         return devs;
     }
 
-    public void addToVault(String name, String description, double playtime, int progression, String opinion) {
+    // methods underneath to get the selected value from the comboboxes
+    public String getSelectedGenre() {
+        String selectedGenre = String.valueOf(genres.getValue());
+        return selectedGenre;
+    }
+
+    public String getSelectedPlatform() {
+        String selectedPlatform = String.valueOf(platforms.getValue());
+        return selectedPlatform;
+    }
+
+    public String getSelectedDev() {
+        String selectedDev = String.valueOf(devs.getValue());
+        return selectedDev;
+    }
+
+    public void addToVault(String name, String description, double playtime, int progression, String opinion, String genre, String platform, String dev) {
 //        ADD CHECK FOR FILLED IN DATA -> PLAYTIME CANNOT CONTAIN , || SET PLACEHOLDER FOR INPUT THAT IS ALLOWED TO BE NULL;
         try {
             Statement stmt = database.getConnection().createStatement();
-            stmt.execute("INSERT INTO game (name, description, hours_played, progression, opinion) VALUES ('"+ name +"', '"+ description +"', '"+ playtime +"', '"+ progression +"', '"+ opinion +"')");
+            stmt.execute("INSERT INTO game (name, description, hours_played, progression, opinion, genre_id, platform_id, developer_id) " +
+                    "VALUES ('"+ name +"', '"+ description +"', '"+ playtime +"', '"+ progression +"', '"+ opinion +"', " +
+                    "(SELECT id FROM genre WHERE name LIKE '"+ genre +"')," +
+                    "(SELECT id FROM platform WHERE name LIKE '"+ platform +"')," +
+                    "(SELECT id FROM developer WHERE name LIKE '"+ dev +"')" +
+                    ")");
+            System.out.println("Game added into Vault!");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public FlowPane showVault(double size) {
+        FlowPane gamePane = new FlowPane();
+        try {
+            Statement stmt = database.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT name FROM game");
+
+            while (rs.next()) {
+                VBox gameBox = new VBox();
+                Button viewGame = new Button("View Game");
+                Label gameName = new Label(rs.getString("name"));
+                gameBox.getChildren().addAll(gameName, viewGame);
+
+                //styling for vbox
+                gameBox.setPrefSize(300, 150);
+                gameBox.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-background-color: lightgray;");
+                gameBox.setAlignment(Pos.CENTER);
+                gameBox.setSpacing(20);
+                gameName.setWrapText(true);
+
+                gamePane.getChildren().add(gameBox);
+            }
+
+            // styling for flowpane
+            gamePane.setPrefWrapLength(size);
+            gamePane.setHgap(20);
+            gamePane.setVgap(20);
+            gamePane.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return gamePane;
     }
 
 

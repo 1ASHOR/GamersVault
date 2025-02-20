@@ -1,6 +1,7 @@
 package org.example.gamersvault.screens;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -8,6 +9,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.example.gamersvault.database.Database;
 import org.example.gamersvault.database.UserController;
+import org.example.gamersvault.database.VaultController;
 
 public class VaultScreen {
 
@@ -19,6 +21,7 @@ public class VaultScreen {
     private Database database;
     private UserController userController;
     private Button addGameButton;
+    private VaultController vc;
 
     public VaultScreen(Stage homeStage) {
         System.out.println("HomeScreen initiated");
@@ -86,6 +89,7 @@ public class VaultScreen {
     private void addFlowPane () {
         //create variables
         flowPane = new FlowPane();
+        vc = new VaultController();
 
         //set sizes
         flowPane.setPrefSize(rootPane.getWidth() - vBox.getPrefWidth(), rootPane.getHeight() - hBox.getPrefHeight());
@@ -94,10 +98,13 @@ public class VaultScreen {
         flowPane.setLayoutX(vBox.getPrefWidth());
         flowPane.setLayoutY(hBox.getPrefHeight());
 
+
         //add styling
-        flowPane.setStyle("-fx-background-color: lightgray");
+//        flowPane.setPrefWrapLength(rootPane.getWidth() - vBox.getPrefWidth());
+        flowPane.setPadding(new Insets(30));
 
         //add child to parent
+        flowPane.getChildren().add(vc.showVault(flowPane.getPrefWidth()));
         rootPane.getChildren().add(flowPane);
     }
 

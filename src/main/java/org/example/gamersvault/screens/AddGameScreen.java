@@ -5,7 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import org.example.gamersvault.database.Database;
 import org.example.gamersvault.database.VaultController;
 
 public class AddGameScreen {
@@ -86,8 +85,11 @@ public class AddGameScreen {
         saveGameButton.setOnAction(e -> {
             double playtime = Double.parseDouble(hours.getText());
             int progression = Integer.parseInt(progress.getText());
+            String genre = vc.getSelectedGenre();
+            String platform = vc.getSelectedPlatform();
+            String dev = vc.getSelectedDev();
 
-            vc.addToVault(name.getText(), description.getText(), playtime, progression, opinion.getText());
+            vc.addToVault(name.getText(), description.getText(), playtime, progression, opinion.getText(), genre, platform, dev);
         });
     }
 }
