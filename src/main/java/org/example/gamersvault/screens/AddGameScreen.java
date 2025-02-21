@@ -90,6 +90,9 @@ public class AddGameScreen {
             String dev = vc.getSelectedDev();
 
             vc.addToVault(name.getText(), description.getText(), playtime, progression, opinion.getText(), genre, platform, dev);
+            addGameStage.close();
+            VaultScreen vaultScreen = new VaultScreen(addGameStage);
+            vaultScreen.getVaultStage().show();
         });
     }
 }

@@ -77,6 +77,8 @@ public class UserScreen {
             //callec object method to update profile info
             pC.updateProfile(gamertagTextField.getText(), discordTextField.getText());
             profileStage.close();
+            VaultScreen vaultScreen = new VaultScreen(profileStage);
+            vaultScreen.getVaultStage().show();
         });
     }
 }

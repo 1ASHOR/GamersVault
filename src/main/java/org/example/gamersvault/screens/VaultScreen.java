@@ -13,6 +13,7 @@ import org.example.gamersvault.database.VaultController;
 
 public class VaultScreen {
 
+    private Stage vaultStage;
     private Pane rootPane;
     private VBox vBox;
     private HBox hBox;
@@ -23,7 +24,8 @@ public class VaultScreen {
     private Button addGameButton;
     private VaultController vc;
 
-    public VaultScreen(Stage homeStage) {
+    public VaultScreen(Stage stage) {
+        vaultStage = stage;
         System.out.println("HomeScreen initiated");
 
         rootPane = new Pane();
@@ -38,8 +40,12 @@ public class VaultScreen {
 
         updateUser();
         addGame();
-        
-        homeStage.setScene(scene);
+
+        vaultStage.setScene(scene);
+    }
+
+    public Stage getVaultStage() {
+        return vaultStage;
     }
 
     private void addVBOX () {
@@ -112,13 +118,14 @@ public class VaultScreen {
         //functionality button
         accountButton.setOnAction(e -> {
             UserScreen profile = new UserScreen();
-
+            vaultStage.close();
         });
     }
 
     private void addGame(){
         addGameButton.setOnAction(e -> {
             AddGameScreen game = new AddGameScreen();
+            vaultStage.close();
         });
     }
 
