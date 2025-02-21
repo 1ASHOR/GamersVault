@@ -1,10 +1,10 @@
 package org.example.gamersvault.screens;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.example.gamersvault.database.Database;
@@ -17,11 +17,12 @@ public class VaultScreen {
     private Pane rootPane;
     private VBox vBox;
     private HBox hBox;
-    private FlowPane flowPane;
+    private ScrollPane scrollPane;
     private Button accountButton;
     private Database database;
     private UserController userController;
     private Button addGameButton;
+    private Button viewGameButton;
     private VaultController vc;
 
     public VaultScreen(Stage stage) {
@@ -35,11 +36,12 @@ public class VaultScreen {
 
         //Call methods to add content sections
         addVBOX();
-        addHBOX();
-        addFlowPane();
+        addHBox();
+        addScrollPane();
 
         updateUser();
         addGame();
+        viewGame();
 
         vaultStage.setScene(scene);
     }
@@ -66,11 +68,12 @@ public class VaultScreen {
         rootPane.getChildren().add(vBox);
     }
 
-    private void addHBOX(){
+    protected void addHBox(){
         //create variables
         hBox = new HBox();
         accountButton = new Button("Edit Profile");
         addGameButton = new Button("Add Game to Vault");
+        viewGameButton = new Button("View game: ");
 
         //set sizes
         hBox.setPrefSize(rootPane.getWidth() - vBox.getPrefWidth(), rootPane.getHeight() / 6);
@@ -88,30 +91,31 @@ public class VaultScreen {
         hBox.setSpacing(20);
 
         //add child to parent
-        hBox.getChildren().addAll(accountButton, addGameButton);
+        hBox.getChildren().addAll(accountButton, addGameButton, viewGameButton);
         rootPane.getChildren().add(hBox);
     }
 
-    private void addFlowPane () {
+    protected void addScrollPane() {
         //create variables
-        flowPane = new FlowPane();
+        scrollPane = new ScrollPane();
         vc = new VaultController();
 
         //set sizes
-        flowPane.setPrefSize(rootPane.getWidth() - vBox.getPrefWidth(), rootPane.getHeight() - hBox.getPrefHeight());
+        scrollPane.setPrefSize(rootPane.getWidth() - vBox.getPrefWidth(), rootPane.getHeight() - hBox.getPrefHeight());
 
         //set layout
-        flowPane.setLayoutX(vBox.getPrefWidth());
-        flowPane.setLayoutY(hBox.getPrefHeight());
+        scrollPane.setLayoutX(vBox.getPrefWidth());
+        scrollPane.setLayoutY(hBox.getPrefHeight());
 
 
         //add styling
-//        flowPane.setPrefWrapLength(rootPane.getWidth() - vBox.getPrefWidth());
-        flowPane.setPadding(new Insets(30));
+        scrollPane.setPadding(new Insets(30));
 
         //add child to parent
-        flowPane.getChildren().add(vc.showVault(flowPane.getPrefWidth()));
-        rootPane.getChildren().add(flowPane);
+        scrollPane.setContent(vc.showVault(scrollPane.getPrefWidth()));
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        rootPane.getChildren().add(scrollPane);
     }
 
     private void updateUser() {
@@ -127,6 +131,16 @@ public class VaultScreen {
             AddGameScreen game = new AddGameScreen();
             vaultStage.close();
         });
+    }
+
+    private void viewGame() {
+        viewGameButton.setOnAction(e -> {
+            GameDetailScreen gameDetail = new GameDetailScreen(vaultStage);
+        });
+    }
+
+    protected HBox getHBox() {
+        return hBox;
     }
 
 }

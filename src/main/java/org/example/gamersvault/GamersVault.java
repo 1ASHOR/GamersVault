@@ -6,7 +6,7 @@ import org.example.gamersvault.screens.VaultScreen;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class GamersVault extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 

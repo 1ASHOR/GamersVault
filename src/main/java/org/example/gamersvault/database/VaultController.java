@@ -118,13 +118,13 @@ public class VaultController {
         FlowPane gamePane = new FlowPane();
         try {
             Statement stmt = database.getConnection().createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT name FROM game");
+            ResultSet rs = stmt.executeQuery("SELECT name, description FROM game");
 
             while (rs.next()) {
                 VBox gameBox = new VBox();
-                Button viewGame = new Button("View Game");
                 Label gameName = new Label(rs.getString("name"));
-                gameBox.getChildren().addAll(gameName, viewGame);
+                Label gameDescription = new Label(rs.getString("description"));
+                gameBox.getChildren().addAll(gameName, gameDescription);
 
                 //styling for vbox
                 gameBox.setPrefSize(300, 150);
@@ -132,6 +132,8 @@ public class VaultController {
                 gameBox.setAlignment(Pos.CENTER);
                 gameBox.setSpacing(20);
                 gameName.setWrapText(true);
+                gameDescription.setWrapText(true);
+                gameDescription.setStyle("-fx-font-size: 10; -fx-font-weight: normal;");
 
                 gamePane.getChildren().add(gameBox);
             }
