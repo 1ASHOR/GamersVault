@@ -4,12 +4,16 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.example.gamersvault.database.Database;
 import org.example.gamersvault.database.UserController;
 import org.example.gamersvault.database.VaultController;
+
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class VaultScreen {
 
@@ -24,10 +28,11 @@ public class VaultScreen {
     private Button addGameButton;
     private Button viewGameButton;
     private VaultController vc;
+    private Button deleteGameButton;
 
     public VaultScreen(Stage stage) {
         vaultStage = stage;
-        System.out.println("HomeScreen initiated");
+        vc = new VaultController();
 
         rootPane = new Pane();
         Scene scene = new Scene(rootPane, 1200, 600);
@@ -42,6 +47,8 @@ public class VaultScreen {
         updateUser();
         addGame();
         viewGame();
+        deleteGame();
+
 
         vaultStage.setScene(scene);
     }
@@ -73,7 +80,8 @@ public class VaultScreen {
         hBox = new HBox();
         accountButton = new Button("Edit Profile");
         addGameButton = new Button("Add Game to Vault");
-        viewGameButton = new Button("View game: ");
+        viewGameButton = new Button("View selected game");
+        deleteGameButton = new Button("Delete selected game");
 
         //set sizes
         hBox.setPrefSize(rootPane.getWidth() - vBox.getPrefWidth(), rootPane.getHeight() / 6);
@@ -91,14 +99,13 @@ public class VaultScreen {
         hBox.setSpacing(20);
 
         //add child to parent
-        hBox.getChildren().addAll(accountButton, addGameButton, viewGameButton);
+        hBox.getChildren().addAll(accountButton, addGameButton, viewGameButton, deleteGameButton, vc.getGameList());
         rootPane.getChildren().add(hBox);
     }
 
     protected void addScrollPane() {
         //create variables
         scrollPane = new ScrollPane();
-        vc = new VaultController();
 
         //set sizes
         scrollPane.setPrefSize(rootPane.getWidth() - vBox.getPrefWidth(), rootPane.getHeight() - hBox.getPrefHeight());
@@ -143,4 +150,28 @@ public class VaultScreen {
         return hBox;
     }
 
+   protected ScrollPane getScrollPane() {
+        return scrollPane;
+   }
+
+   protected VaultController getVaultController() {
+        return vc;
+   }
+
+    private void deleteGame() {
+        deleteGameButton.setOnAction(e -> {
+            if(vc.getSelectedGame() != null){
+                try {
+                    Statement stmt = database.getConnection().createStatement();
+                    stmt.execute("DELETE FROM game WHERE name LIKE '"+ vc.getSelectedGame() +"'");
+                    System.out.println("game deleted");
+                    addScrollPane();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            } else {
+                System.out.println("no game selected");
+            }
+        });
+    }
 }

@@ -6,6 +6,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import org.example.gamersvault.screens.VaultScreen;
 
 import java.awt.*;
 import java.sql.ResultSet;
@@ -18,6 +19,7 @@ public class VaultController {
     private ComboBox genres;
     private ComboBox platforms;
     private ComboBox devs;
+    private ComboBox gameList;
 
     public VaultController() {
         Database db = new Database();
@@ -133,7 +135,7 @@ public class VaultController {
                 gameBox.setSpacing(20);
                 gameName.setWrapText(true);
                 gameDescription.setWrapText(true);
-                gameDescription.setStyle("-fx-font-size: 10; -fx-font-weight: normal;");
+                gameDescription.setStyle("-fx-font-size: 11; -fx-font-weight: normal;");
 
                 gamePane.getChildren().add(gameBox);
             }
@@ -150,5 +152,31 @@ public class VaultController {
         return gamePane;
     }
 
+    public ComboBox getGameList() {
+        gameList = new ComboBox();
+        gameList.setPrefWidth(200);
+        gameList.setPromptText("Select Game");
+
+        try {
+            Statement stmt = database.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery("Select name From game");
+
+            while (rs.next()) {
+                gameList.getItems().add(rs.getString("name"));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return gameList;
+    }
+
+    public String getSelectedGame() {
+        String selectedGame = null;
+        if(gameList.getValue() != null) {
+            selectedGame = String.valueOf(gameList.getSelectionModel().getSelectedItem());
+        }
+        return selectedGame;
+    }
 
 }
