@@ -103,11 +103,12 @@ public class VaultController {
 //        ADD CHECK FOR FILLED IN DATA -> PLAYTIME CANNOT CONTAIN , || SET PLACEHOLDER FOR INPUT THAT IS ALLOWED TO BE NULL;
         try {
             Statement stmt = database.getConnection().createStatement();
-            stmt.execute("INSERT INTO game (name, description, hours_played, progression, opinion, genre_id, platform_id, developer_id) " +
+            stmt.execute("INSERT INTO game (name, description, hours_played, progression, opinion, genre_id, platform_id, developer_id, player) " +
                     "VALUES ('"+ name +"', '"+ description +"', '"+ playtime +"', '"+ progression +"', '"+ opinion +"', " +
                     "(SELECT id FROM genre WHERE name LIKE '"+ genre +"')," +
                     "(SELECT id FROM platform WHERE name LIKE '"+ platform +"')," +
-                    "(SELECT id FROM developer WHERE name LIKE '"+ dev +"')" +
+                    "(SELECT id FROM developer WHERE name LIKE '"+ dev +"')," +
+                    "(SELECT gamertag FROM user)" +
                     ")");
             System.out.println("Game added into Vault!");
         } catch (SQLException e) {

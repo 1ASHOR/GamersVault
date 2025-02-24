@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.example.gamersvault.database.Database;
+import org.example.gamersvault.database.UserController;
 import org.example.gamersvault.database.VaultController;
 
 public class AddGameScreen {
