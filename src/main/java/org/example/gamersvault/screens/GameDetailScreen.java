@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.gamersvault.database.Database;
@@ -18,19 +19,18 @@ public class GameDetailScreen extends VaultScreen {
 
     private Button returnToVault;
     private Database database;
+    private BorderPane borderPane;
 
     public GameDetailScreen(Stage stage) {
         super(stage);
 
-        addScrollPane();
         returnToVault(stage);
     }
 
     @Override
     protected void addScrollPane(){
-        super.addScrollPane();
-
-        super.getScrollPane().setContent(viewGame());
+        borderPane = new BorderPane();
+        borderPane.getChildren().add(viewGame());
     }
 
     @Override
@@ -50,15 +50,15 @@ public class GameDetailScreen extends VaultScreen {
     private ScrollPane viewGame(){
         database = new Database();
         ScrollPane scrollGame = new ScrollPane();
+        scrollGame.setPrefSize(super.getScrollPaneWidth(), super.getScrollPaneHeight());
         try {
             Statement stmt = database.getConnection().createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM game WHERE name LIKE '"+ super.getVaultController().getSelectedGame() +"'");
+            ResultSet rs = stmt.executeQuery("SELECT name FROM game WHERE name LIKE '"+ super.getVaultController().getSelectedGame() +"'");
 
             while(rs.next()){
-                scrollGame.setContent(new Label(rs.getString("name")));
-                System.out.println(rs.getString("name"));
+                Label label = new Label(rs.getString("name"));
+                System.out.println(label.getText());
             }
-
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

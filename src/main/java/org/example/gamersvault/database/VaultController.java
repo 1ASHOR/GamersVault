@@ -21,8 +21,7 @@ public class VaultController {
     private ComboBox devs;
     private ComboBox gameList;
 
-    public VaultController() {
-        Database db = new Database();
+    public VaultController(Database db) {
         this.database = db;
     }
 

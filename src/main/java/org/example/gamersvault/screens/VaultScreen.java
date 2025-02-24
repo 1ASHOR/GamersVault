@@ -32,12 +32,12 @@ public class VaultScreen {
 
     public VaultScreen(Stage stage) {
         vaultStage = stage;
-        vc = new VaultController();
+        database = new Database();
+        vc = new VaultController(database);
+        userController = new UserController(database);
 
         rootPane = new Pane();
         Scene scene = new Scene(rootPane, 1200, 600);
-        database = new Database();
-        userController = new UserController(database);
 
         //Call methods to add content sections
         addVBOX();
@@ -150,8 +150,14 @@ public class VaultScreen {
         return hBox;
     }
 
-   protected ScrollPane getScrollPane() {
-        return scrollPane;
+   protected double getScrollPaneWidth() {
+        double i = scrollPane.getPrefWidth();
+        return i;
+   }
+
+   protected double getScrollPaneHeight() {
+        double i = scrollPane.getPrefHeight();
+        return i;
    }
 
    protected VaultController getVaultController() {
@@ -175,19 +181,3 @@ public class VaultScreen {
         });
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

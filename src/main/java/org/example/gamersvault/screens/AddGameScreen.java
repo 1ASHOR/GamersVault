@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import org.example.gamersvault.database.Database;
 import org.example.gamersvault.database.VaultController;
 
 public class AddGameScreen {
@@ -46,7 +47,7 @@ public class AddGameScreen {
         Label givePlatform = new Label("Platform");
         Label giveDeveloper = new Label("Developer");
         saveGameButton = new Button("Add game to vault");
-        vc = new VaultController();
+        vc = new VaultController(new Database());
 
         //add to grid
         rootGrid.add(giveName, 0, 0, 1, 1);

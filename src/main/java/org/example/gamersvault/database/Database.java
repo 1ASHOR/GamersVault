@@ -12,6 +12,7 @@ public class Database {
 
         try {
             this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gamers_vault", "root", "");
+            System.out.println("Connected to database");
         } catch (SQLException e) {
             System.out.println("no connection");
             throw new RuntimeException(e);
