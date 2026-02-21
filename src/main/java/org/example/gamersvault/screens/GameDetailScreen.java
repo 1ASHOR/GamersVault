@@ -1,15 +1,11 @@
 package org.example.gamersvault.screens;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.gamersvault.database.Database;
-import org.example.gamersvault.database.VaultController;
-import org.w3c.dom.ls.LSOutput;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
