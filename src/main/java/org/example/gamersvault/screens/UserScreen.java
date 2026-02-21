@@ -86,7 +86,7 @@ public class UserScreen {
         // Maak benodigde objecten aan voor databasecommunicatie
         Database db = new Database();
         UserController pC = new UserController(db);
-        
+
         // Stel de actie van de save-knop in
         saveButton.setOnAction(e -> {
 
